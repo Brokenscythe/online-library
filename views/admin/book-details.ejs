@@ -1,0 +1,22 @@
+<%- include('../shared/includes/head', {pageTitle: 'Available Books'}) %>
+<link rel="stylesheet" href="/styles/book-details.css">
+</head>
+<body>
+  <%- include('../shared/includes/header') %>
+  <main>
+    <h1>More Details of <span><%= book.title %></span></h1>
+    <section>
+      <article>
+        <ul>
+          <li>Publisher: <span><%= book.publishers.name %></span></li>
+          <li>Year of Publication: <span><%= book.year %></span></li>
+        </ul>
+        <div class="summary">
+          <h2>Short Summary:</h2>
+          <p id="summary"><%= book.summary %></p>
+        </div>   
+      </article>
+    </section>
+  </main>
+  <%- include('../shared/includes/footer') %>
+</body>

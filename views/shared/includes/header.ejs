@@ -1,0 +1,21 @@
+<head>
+  <link rel="stylesheet" href="/styles/navigation.css" />
+</head>
+<header>
+  <div id="header">
+    <div><a href="/">Online Library</a></div>
+    <nav>
+      <ul>
+        <% if(locals.isAuth) {%>
+        <li>
+          <form action="/logout" method="POST">
+            <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>" />
+            <button id="logout">Logout</button>
+          </form>
+        </li>
+        <% } %>
+      </ul>
+    </nav>
+  </div>
+  <hr />
+</header>

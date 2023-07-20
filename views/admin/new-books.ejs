@@ -1,0 +1,87 @@
+<%- include('../shared/includes/head', {pageTitle: 'Available Books'}) %>
+<link rel="stylesheet" href="/styles/forms.css">
+<link rel="stylesheet" href="/styles/new-books.css">
+</head>
+<body>
+  <%- include('../shared/includes/header') %>
+  <main>
+    <h1>Add new Book</h1>
+    <form action="/book/new?_csrf=<%= locals.csrfToken %>" method="POST" enctype="multipart/form-data">
+      <p>
+            <label for="title">Title</label>
+            <input type="text" name="title" id="title" required>
+        </p>
+          
+        <p>
+            <label for="summary">Summary</label>
+            <textarea name="summary" id="summary" rows="7" maxlength="700"></textarea>
+        </p>
+        <p>
+            <label for="image">Book Cover</label>
+            <input type="file" name="image" id="image" accept="image/png, image/jpg" required>
+        </p>
+
+
+        <p>
+            <label for="author">Choose Author</label>
+            <select name="author" id="author" required>
+              <% authors.forEach(author => { %>
+                <option value="<%= author.id %>"><%= author.name %></option>
+              <% }) %>
+          
+            </select>
+        </p>
+        <p>
+            <label for="category">Choose Category</label>
+            <select name="category" id="category" required>
+              <% categories.forEach(category => { %>
+                <option value="<%= category.id %>"><%= category.name %></option>
+              <% }) %>
+            </select>
+        </p>
+        <p>
+            <label for="publisher">Choose Publisher</label>
+            <select name="publisher" id="publisher" required>
+              <% publishers.forEach(publisher => { %>
+                <option value="<%= publisher.id %>"><%= publisher.name %></option>
+              <% }) %>
+            </select>
+        </p>
+        <p>
+            <label for="yop">Year of Publication</label>
+            <input type="text" name="yop" id="yop" required>
+        </p>
+        <p>
+          <label for="binding">Choose Binding</label>
+          <select name="binding" id="binding" required>
+            <% bindings.forEach(binding => { %>
+              <option value="<%= binding.id %>"><%= binding.name %></option>
+            <% }) %>
+          </select>
+        </p>
+        <p>
+            <label for="language">Choose Language</label>
+            <select name="language" id="language" required>
+              <% languages.forEach(language => { %>
+                <option value="<%= language.id %>"><%= language.name %></option>
+              <% }) %>
+            </select>
+        </p>
+        <p>
+          <label for="formats">Choose Formats</label>
+          <select name="formats" id="formats" required>
+            <% formats.forEach(format => { %>
+              <option value="<%= format.id %>"><%= format.name %></option>
+            <% }) %>
+          </select>
+        </p>
+        
+        
+        <p>
+            <button type="reset" class="btn btn-alt">Reset</button>
+            <button class="btn">Save</button>
+      </p>
+      </form>
+      </main>
+      <%- include('../shared/includes/footer') %>
+  

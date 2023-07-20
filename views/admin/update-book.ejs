@@ -1,0 +1,115 @@
+<%- include('../shared/includes/head', {pageTitle: 'Available Books'}) %>
+<link rel="stylesheet" href="/styles/forms.css">
+<link rel="stylesheet" href="/styles/new-books.css">
+<script src="/public/scripts/delete-book.js"></script>
+</head>
+<body>
+  <%- include('../shared/includes/header') %>
+  <main>
+    <h1>Update Book</h1>
+    <form action="/book/manage/<%= book.id %>?_csrf=<%= locals.csrfToken %>" method="POST" enctype="multipart/form-data">
+      <p>
+        <label for="title">Title</label>
+        <input type="text" name="title" id="title" value="<%= book.title %>" required>
+      </p> 
+
+      <p>
+        <label for="summary">Summary</label>
+        <textarea name="summary" id="summary" rows="7" maxlength="700" required><%= book.summary %></textarea>
+      </p>
+      
+      <p>
+        <label for="image">Book Cover</label>
+        <input type="file" name="image" id="image" accept="image/png, image/jpg" >
+      </p>
+
+      <p>
+        <label for="author">Choose Author</label>
+        <select name="author" id="author" required>
+          <% authors.forEach(author => { %>
+            <option value="<%= author.id %>" <%= author.id === book.book_authors[0]?.authorId ? 'selected' : '' %>><%= author.name %></option>
+          <% }) %>
+        </select>
+      </p>
+
+      <p>
+        <label for="category">Choose Category</label>
+        <select name="category" id="category" required>
+          <% categories.forEach(category => { %>
+            <option value="<%= category.id %>" <%= category.id === book.book_categories[0]?.cathegorieId ? 'selected' : '' %>><%= category.name %></option>
+          <% }) %>
+        </select>
+      </p>
+
+      <p>
+        <label for="publisher">Choose Publisher</label>
+        <select name="publisher" id="publisher" required>
+          <% publishers.forEach(publisher => { %>
+            <option value="<%= publisher.id %>" <%= publisher.id === book.publisherId ? 'selected' : '' %>><%= publisher.name %></option>
+          <% }) %>
+        </select>
+      </p>
+
+      <p>
+        <label for="yop">Year of Publication</label>
+        <input type="text" name="yop" id="yop" value="<%= book.year %>" required>
+      </p>
+      <p>
+        <label for="binding">Choose Binding</label>
+        <select name="binding" id="binding" required>
+          <% bindings.forEach(binding => { %>
+            <option value="<%= binding.id %>" <%= binding.id === book.bindingId ? 'selected' : '' %>><%= binding.name %></option>
+          <% }) %>
+        </select>
+      </p>
+      <p>
+        <label for="language">Choose Language</label>
+        <select name="language" id="language" required>
+          <% languages.forEach(language => { %>
+            <option value="<%= language.id %>" <%= language.id === book.languageId ? 'selected' : '' %>><%= language.name %></option>
+          <% }) %>
+        </select>
+      </p>
+
+      <p>
+        <label for="formats">Choose Formats</label>
+        <select name="formats" id="formats" required>
+          <% formats.forEach(format => { %>
+            <option value="<%= format.id %>" <%= format.id === book.formatId ? 'selected' : '' %>><%= format.name %></option>
+          <% }) %>
+        </select>   
+      </p>
+
+      <p id="update-delete">
+        <button class="btn" id="updateButton" type="submit">Update</button>
+        <button class="btn btn-danger" id="deleteButton" type="button">Delete</button>
+      </p>
+    </form>
+
+    <div id="deleteForm" data-action="/book/manage/<%= book.id %>?_csrf=<%= locals.csrfToken %>&_method=DELETE"></div>
+    <input type="hidden" name="_method" value="DELETE">
+    <script>
+      const deleteButton = document.getElementById("deleteButton");
+      const deleteForm = document.getElementById("deleteForm");
+
+      deleteButton.addEventListener("click", () => {
+        const confirmDelete = confirm("Are you sure you want to delete this book?");
+        if (confirmDelete) {
+          const action = deleteForm.dataset.action;
+          fetch(action, { method: "POST" })
+            .then((response) => {
+              if (response.ok) {
+                window.location.href = "/books";
+              } else {
+                throw new Error("Error deleting the book");
+              }
+            })
+            .catch((error) => {
+              console.error("Error deleting the book:", error);
+            });
+        }
+      });
+    </script>   
+  </main>
+  <%- include('../shared/includes/footer') %>
+</body>

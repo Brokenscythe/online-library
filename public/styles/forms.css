@@ -1,0 +1,68 @@
+html {
+  font-family: "Lora", serif;
+  /* GREEN COLORS */
+  --bookshelf-color: #006633;
+  --lightest-green: #c8facd;
+  --lighter-green: #8af09a;
+  --light-green: #51e86f;
+  --medium-green: #18d84a;
+  --dark-green: #0eb43b;
+  --darker-green: #0a8b2e;
+  --darkest-green: #075d1e;
+  /* GREY COLORS */
+  --lightest-gray: #f7f7f7;
+  --lighter-gray: #ececec;
+  --light-gray: #d6d6d6;
+  --medium-gray: #b8b8b8;
+  --dark-gray: #7e7e7e;
+  --darker-gray: #525252;
+  --darkest-gray: #303030;
+  /*  PURPLE COLORS */
+  --lightest-purple: #f5f0ff;
+  --lighter-purple: #ddbbff;
+  --light-purple: #c393ff;
+  --medium-purple: #a16aff;
+  --dark-purple: #7a41ff;
+  --darker-purple: #5c27ff;
+  --darkest-purple: #3e11ff;
+  /*  ORANGE COLORS */
+  --lightest-orange: #fff2e5;
+  --lighter-orange: #ffd3a8;
+  --light-orange: #ffb077;
+  --medium-orange: #ff8f45;
+  --dark-orange: #ff6612;
+  --darker-orange: #e55000;
+  --darkest-orange: #c03600;
+
+  --color-error-100: rgb(255, 192, 180);
+  --color-error-500: rgb(199, 51, 15);
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+
+  --border-radius-small: 4px;
+  --border-radius-medium: 6px;
+
+  --shadow-medium: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+form hr {
+  border-color: var(--light-gray);
+  margin: var(--space-4);
+}
+
+label {
+  display: block;
+  margin-bottom: var(--space-2);
+}
+
+input,
+textarea {
+  font: inherit;
+  padding: var(--space-1);
+  border-radius: var(--border-radius-small);
+  border: none;
+  width: 90%;
+}
