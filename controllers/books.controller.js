@@ -2,6 +2,8 @@ const multer = require("multer");
 const upload = multer().single("image");
 const { PrismaClient } = require("@prisma/client");
 
+const helpers = require("../views/admin/helpers");
+
 const prisma = new PrismaClient();
 const Book = require("../models/book.model");
 
@@ -81,8 +83,8 @@ async function createNewBooks(req, res) {
   const { filename } = req.file;
 
   try {
-    const authorId = parseInt(author);
-    const categoryId = parseInt(category);
+    const authorIds = author.map((a) => parseInt(a));
+    const categoryIds = category.map((c) => parseInt(c));
     const publisherId = parseInt(publisher);
     const languageId = parseInt(language);
     const formatId = parseInt(formats);
@@ -93,8 +95,12 @@ async function createNewBooks(req, res) {
         summary,
         year: yop,
         bindings: { connect: { id: bindingId } },
-        book_authors: { create: [{ author: { connect: { id: authorId } } }] },
-        book_categories: { create: [{ categorie: { connect: { id: categoryId } } }] },
+        book_authors: {
+          create: authorIds.map((authorId) => ({ author: { connect: { id: authorId } } })),
+        },
+        book_categories: {
+          create: categoryIds.map((categoryId) => ({ categorie: { connect: { id: categoryId } } })),
+        },
         publishers: { connect: { id: publisherId } },
         languages: { connect: { id: languageId } },
         formats: { connect: { id: formatId } },
@@ -196,6 +202,8 @@ async function getUpdateBooks(req, res, next) {
       languages,
       formats,
       bindings,
+      isAuthorSelected: helpers.isAuthorSelected,
+      isCategorySelected: helpers.isCategorySelected,
     });
   } catch (error) {
     console.error("Error fetching book details:", error);
@@ -228,6 +236,13 @@ async function updateBooks(req, res, next) {
         },
       });
 
+      const selectedAuthors = Array.isArray(author)
+        ? author.map((authorId) => parseInt(authorId))
+        : [parseInt(author)];
+      const selectedCategories = Array.isArray(category)
+        ? category.map((categoryId) => parseInt(categoryId))
+        : [parseInt(category)];
+
       if (!existingBook) {
         return res.status(404).send("Book not found");
       }
@@ -244,15 +259,28 @@ async function updateBooks(req, res, next) {
         summary: summary || existingBook.summary,
         year: yop || existingBook.year,
         book_authors: {
-          update: [{ where: { id: existingBook.book_authors[0]?.id }, data: { authorId } }],
+          deleteMany: {
+            bookId: bookId,
+          },
+          create: selectedAuthors.map((authorId) => ({
+            author: {
+              connect: {
+                id: authorId,
+              },
+            },
+          })),
         },
         book_categories: {
-          update: [
-            {
-              where: { id: existingBook.book_categories[0]?.id },
-              data: { cathegorieId: categoryId },
+          deleteMany: {
+            bookId: bookId,
+          },
+          create: selectedCategories.map((categoryId) => ({
+            categorie: {
+              connect: {
+                id: categoryId,
+              },
             },
-          ],
+          })),
         },
         publishers: { connect: { id: publisherId } },
         languages: { connect: { id: languageId } },

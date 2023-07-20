@@ -23,21 +23,20 @@
 
 
         <p>
-            <label for="author">Choose Author</label>
-            <select name="author" id="author" required>
-              <% authors.forEach(author => { %>
-                <option value="<%= author.id %>"><%= author.name %></option>
-              <% }) %>
-          
-            </select>
+          <label for="author">Choose Authors</label>
+          <select name="author" id="author" multiple required>
+            <% authors.forEach(author => { %>
+              <option value="<%= author.id %>"><%= author.name %></option>
+            <% }) %>
+          </select>
         </p>
         <p>
-            <label for="category">Choose Category</label>
-            <select name="category" id="category" required>
-              <% categories.forEach(category => { %>
-                <option value="<%= category.id %>"><%= category.name %></option>
-              <% }) %>
-            </select>
+          <label for="category">Choose Categories</label>
+          <select name="category" id="category" multiple required>
+            <% categories.forEach(category => { %>
+              <option value="<%= category.id %>"><%= category.name %></option>
+            <% }) %>
+          </select>
         </p>
         <p>
             <label for="publisher">Choose Publisher</label>

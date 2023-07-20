@@ -9,14 +9,12 @@ function userCredentialsAreValid(username, email, password) {
     password &&
     password.trim().length >= 6 &&
     username &&
-    username.trim().length >= 6
+    username.trim().length >= 4
   );
 }
 
 function userDetailsAreValid(username, fullname, email, password) {
-  return (
-    userCredentialsAreValid(username, email, password) && !isEmpty(fullname)
-  );
+  return userCredentialsAreValid(username, email, password) && !isEmpty(fullname);
 }
 
 function passwordIsConfirmed(password, confirmPassword) {

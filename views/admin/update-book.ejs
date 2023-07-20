@@ -1,7 +1,6 @@
 <%- include('../shared/includes/head', {pageTitle: 'Available Books'}) %>
 <link rel="stylesheet" href="/styles/forms.css">
 <link rel="stylesheet" href="/styles/new-books.css">
-<script src="/public/scripts/delete-book.js"></script>
 </head>
 <body>
   <%- include('../shared/includes/header') %>
@@ -24,22 +23,23 @@
       </p>
 
       <p>
-        <label for="author">Choose Author</label>
-        <select name="author" id="author" required>
+        <label for="author">Choose Authors</label>
+        <select name="author" id="author" multiple required>
           <% authors.forEach(author => { %>
-            <option value="<%= author.id %>" <%= author.id === book.book_authors[0]?.authorId ? 'selected' : '' %>><%= author.name %></option>
+            <option value="<%= author.id %>" <%= isAuthorSelected(book, author) ? 'selected' : '' %>><%= author.name %></option>
           <% }) %>
         </select>
       </p>
-
+      
       <p>
-        <label for="category">Choose Category</label>
-        <select name="category" id="category" required>
+        <label for="category">Choose Categories</label>
+        <select name="category" id="category" multiple required>
           <% categories.forEach(category => { %>
-            <option value="<%= category.id %>" <%= category.id === book.book_categories[0]?.cathegorieId ? 'selected' : '' %>><%= category.name %></option>
+            <option value="<%= category.id %>" <%= isCategorySelected(book, category) ? 'selected' : '' %>><%= category.name %></option>
           <% }) %>
         </select>
       </p>
+      
 
       <p>
         <label for="publisher">Choose Publisher</label>
@@ -81,7 +81,7 @@
       </p>
 
       <p id="update-delete">
-        <button class="btn" id="updateButton" type="submit">Update</button>
+        <button class="btn" type="submit">Update</button>
         <button class="btn btn-danger" id="deleteButton" type="button">Delete</button>
       </p>
     </form>
@@ -109,7 +109,9 @@
             });
         }
       });
-    </script>   
+    </script>
   </main>
   <%- include('../shared/includes/footer') %>
+
+  
 </body>

@@ -36,17 +36,14 @@
             </td>
             <td><%= book.title %></td>
             <td>
-              <% const authors = bookAuthors.filter(ba => ba.bookId === book.id);
-                 authors.forEach((author, index) => {
-                   if (index > 0) { %>, <% }
-                   %><%= author.author.name %>
-              <% }); %>
+              <% const authors = book.book_authors.map(ba => ba.author.name);
+                 const authorNames = authors.join(', ');
+                 %><%= authorNames %>
             </td>
-            <td><% const categories = bookCategories.filter(bc => bc.bookId === book.id);
-                 categories.forEach((category, index) => {
-                   if (index > 0) { %>, <% }
-                   %><%= category.categorie.name %>
-              <% }); %>
+            <td>
+              <% const categories = book.book_categories.map(bc => bc.categorie.name);
+                 const categoryNames = categories.join(', ');
+                 %><%= categoryNames %>
             </td>
             <td><%= bindings.find(binding => binding.id === book.bindingId)?.name %></td>
             <td><%= languages.find(language => language.id === book.languageId)?.name %></td>
